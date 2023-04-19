@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/devopscorner/golang-adot/src/config"
-	"github.com/devopscorner/golang-adot/src/controller"
 	"github.com/devopscorner/golang-adot/src/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -27,7 +26,7 @@ func TestLoginController_Main(t *testing.T) {
 
 func TestLoginController_CreateToken(t *testing.T) {
 	// Set up the test request
-	loginRequest := controller.LoginRequest{Username: "admin", Password: "password"}
+	loginRequest := LoginRequest{Username: "admin", Password: "password"}
 	jsonRequest, _ := json.Marshal(loginRequest)
 	req, _ := http.NewRequest(http.MethodPost, "/login", bytes.NewBuffer(jsonRequest))
 	req.Header.Set("Content-Type", "application/json")
