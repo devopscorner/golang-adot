@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7a3478d1-8835-43d5-ac56-dd45dbb6f045",
-		"name": "RESTful API - Golang bookstore-adot Localhost",
+		"_postman_id": "218cecea-3022-44f1-93af-63f29ebed27d",
+		"name": "RESTful API - Golang DynamoDB ORM ADOT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "260154"
 	},
@@ -12,33 +12,11 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
-							"/* =============== DESCRIPTION FILE ======================================== */",
-							"/*                                                                           */",
-							"/*   Module  : ZEROC0D3 JSON TEST API - MyCampus.app                         */",
-							"/*   Type    : POSTMAN JSON                                                  */",
-							"/*   Author  : ZEROC0D3 Team                                                 */",
-							"/*   Date    : November 2016                                                 */",
-							"/*                                                                           */",
-							"/*  __________                  _________ _______       .___________         */",
-							"/*  \\____    /___________  ____ \\_   ___ \\\\   _  \\    __| _/\\_____  \\ Team   */",
-							"/*    /     // __ \\_  __ \\/  _ \\/    \\  \\//  /_\\  \\  / __ |   _(__  <        */   ",
-							"/*   /     /\\  ___/|  | \\(  <_> )     \\___\\  \\_/   \\/ /_/ |  /       \\       */",
-							"/*  /_______ \\___  >__|   \\____/ \\______  /\\_____  /\\____ | /______  /       */",
-							"/*          \\/   \\/                     \\/       \\/      \\/        \\/        */",
-							"/*                                                                           */",
-							"/*  ZeroC0d3 Team                                                            */  ",
-							"/*  [ N0th1ng Imp0ss1bl3, Grey Hat Coder ]                                   */",
-							"/*  --------------------------------------------------------                 */",
-							"/*  http://pastebin.com/u/zeroc0d3                                           */",
-							"/*  https://github.com/zeroc0d3                                              */",
-							"/*                                                                           */",
-							"/* ========================================================================= */",
-							"",
 							"var url_restapi = postman.getGlobalVariable(\"url_restapi\");",
 							"tests[\"Success to open welcome page => \" +url_restapi] = responseCode.code === 200;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -90,7 +68,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "{{local_url}}:8080",
+				"url": "{{api_url}}:8080",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -127,7 +105,44 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "{{local_url}}:8080/health",
+				"url": "{{api_url}}:8080/health",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Metrics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{api_url}}:8080/metrics",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -165,6 +180,10 @@
 							"        \"properties\": {",
 							"            \"token\": { \"type\": \"string\" }",
 							"        },",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"refresh_token\": { \"type\": \"string\" }",
+							"        },",
 							"        \"additionalProperties\": false,",
 							"    }",
 							"};",
@@ -181,16 +200,19 @@
 							"var response_data = tv4.validateResult(responseBody, schema_test);",
 							"var title_data    = \"user login\";",
 							"",
-							"var jsonData = jsonParse.json();",
-							"var token    = jsonData.token;",
+							"var jsonData      = jsonParse.json();",
+							"var token         = jsonData.token;",
+							"var refresh_token = jsonData.refresh_token;",
 							"",
 							"// ----------------------------------------- //",
 							"//  Set Global Variable Token                //",
 							"// ----------------------------------------- //",
 							"postman.setGlobalVariable(\"auth_token\", token);",
+							"// postman.setGlobalVariable(\"refresh_token\", refresh_token);",
 							"",
 							"//tv4",
-							"tests[\"Login user succesfully go through, with token: \"+token] = response_data;"
+							"tests[\"Token: \"+token] = response_data;",
+							"// tests[\"Refresh Token: \"+refresh_token] = response_data;"
 						],
 						"type": "text/javascript"
 					}
@@ -212,7 +234,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"username\": \"devopscorner\",\n    \"password\": \"DevOpsCorner2023\"\n}"
 				},
-				"url": "{{local_url}}:8080/v1/login",
+				"url": "{{api_url}}:8080/v1/login",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -233,7 +255,7 @@
 						"type": "text"
 					}
 				],
-				"url": "{{local_url}}:8080/v1/books",
+				"url": "{{api_url}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -254,7 +276,7 @@
 						"type": "text"
 					}
 				],
-				"url": "{{local_url}}:8080/v1/books/9",
+				"url": "{{api_url}}:8080/v1/books/1681899565360226000",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -279,7 +301,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\",\n    \"year\": \"2023\"\n}"
 				},
-				"url": "{{local_url}}:8080/v1/books",
+				"url": "{{api_url}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -304,7 +326,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\",\n    \"year\": \"2023\"\n}\n"
 				},
-				"url": "{{local_url}}:8080/v1/books",
+				"url": "{{api_url}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -329,13 +351,13 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\",\n    \"year\": \"2023\"\n}"
 				},
-				"url": "{{local_url}}:8080/v1/books",
+				"url": "{{api_url}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
 		},
 		{
-			"name": "Edit Books 3 ",
+			"name": "Edit Book Id",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -354,13 +376,13 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
-				"url": "{{local_url}}:8080/v1/books/9",
+				"url": "{{api_url}}:8080/v1/books/1680783116427044000",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []
 		},
 		{
-			"name": "Delete Books 3",
+			"name": "Delete Book Id",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -377,9 +399,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
+					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
-				"url": "{{local_url}}:8080/v1/books/9",
+				"url": "{{api_url}}:8080/v1/books/10",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []
