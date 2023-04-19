@@ -22,7 +22,7 @@ func TestLoginController_Main(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	config.LoadConfig()
 	routerLogin = gin.Default()
-	routes.SetupRoutes(routerBook)
+	routes.SetupRoutes(routerLogin)
 }
 
 func TestLoginController_CreateToken(t *testing.T) {
