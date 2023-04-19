@@ -18,7 +18,7 @@ var (
 	routerLogin *gin.Engine
 )
 
-func TestLoginController_Main() {
+func TestLoginController_Main(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	config.LoadConfig()
 	routerLogin = gin.Default()
