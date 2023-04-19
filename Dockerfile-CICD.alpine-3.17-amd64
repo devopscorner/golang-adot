@@ -19,14 +19,14 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
         go build -mod=readonly -ldflags="-s -w" -o goapp
 
 ### Binary ###
-FROM devopscorner/cicd:alpine-3.17
+FROM devopscorner/cicd:alpine
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG GIT_COMMIT
 ARG GIT_URL
 
-ENV VENDOR="DevOpsCornerId"
+ENV VENDOR="DevOpsCornerId"`
 ENV AUTHOR="DevOpsCorner.id <support@devopscorner.id>"
 ENV IMG_NAME="alpine"
 ENV IMG_VERSION="3.17"
