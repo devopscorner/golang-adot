@@ -1,0 +1,22 @@
+---
+repositories:
+  - name: devopscorner-adot-lab
+    url: s3://devopscorner-adot-chart/lab
+
+templates:
+  default: &default
+    namespace: devops-tools
+    version: "1.4.0-rc"
+
+releases:
+  - name: bookstore-adot-rest
+    chart: devopscorner-adot-lab/api
+    values:
+      - ./api-rest-values.yml
+    <<: *default
+
+  - name: bookstore-adot-grpc
+    chart: devopscorner-adot-lab/api
+    values:
+      - ./api-grpc-values.yml
+    <<: *default

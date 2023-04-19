@@ -1,0 +1,60 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"strconv"
+	"time"
+
+	"github.com/devopscorner/golang-adot/src/config"
+	"github.com/devopscorner/golang-adot/src/driver"
+	"github.com/devopscorner/golang-adot/src/model"
+	"gorm.io/gorm"
+)
+
+func main() {
+	_, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf("Error loading config: %v", err)
+	}
+
+	// Connect to database
+	driver.ConnectDatabase()
+
+	MigrateBook(driver.DB)
+	fmt.Println("Migration Done...")
+}
+
+func MigrateBook(db *gorm.DB) error {
+	if err := db.AutoMigrate(&model.Book{}); err != nil {
+		return err
+	}
+
+	books := []model.Book{
+		{Title: "The Great Gatsby", Author: "F. Scott Fitzgerald", Year: "1925"},
+		{Title: "To Kill a Mockingbird", Author: "Harper Lee", Year: "1960"},
+		{Title: "1984", Author: "George Orwell", Year: "1949"},
+		{Title: "Animal Farm", Author: "George Orwell", Year: "1945"},
+		{Title: "The Catcher in the Rye", Author: "J.D. Salinger", Year: "1951"},
+		{Title: "One Hundred Years of Solitude", Author: "Gabriel Garcia Marquez", Year: "1967"},
+		{Title: "Moby-Dick", Author: "Herman Melville", Year: "1851"},
+		{Title: "Pride and Prejudice", Author: "Jane Austen", Year: "1813"},
+	}
+
+	for _, book := range books {
+		t := time.Now().UnixNano()
+		id_time := strconv.FormatInt(t, 10)
+		book.ID = id_time
+		book.CreatedAt = time.Now()
+		book.UpdatedAt = time.Now()
+		if err := db.Create(&book).Error; err != nil {
+			fmt.Printf("Failed to insert data for book: %+v\n", book)
+			fmt.Printf("Error: %v\n", err)
+			return err
+		} else {
+			fmt.Printf("Sample book: %+v, created successfully! \n", book.Title)
+		}
+	}
+
+	return nil
+}

@@ -1,0 +1,138 @@
+### Builder ###
+FROM golang:1.19.6-alpine3.17 as builder
+
+WORKDIR /go/src/app
+ENV GIN_MODE=release
+ENV GOPATH=/go
+
+RUN apk add --no-cache \
+        build-base \
+        git \
+        curl \
+        make \
+        bash
+
+COPY src /go/src/app
+
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
+    cd /go/src/app && \
+        go build -mod=readonly -ldflags="-s -w" -o goapp
+
+### Binary ###
+FROM devopscorner/cicd:alpine-3.17
+
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG GIT_COMMIT
+ARG GIT_URL
+
+ENV VENDOR="DevOpsCornerId"
+ENV AUTHOR="DevOpsCorner.id <support@devopscorner.id>"
+ENV IMG_NAME="alpine"
+ENV IMG_VERSION="3.17"
+ENV IMG_DESC="Docker GO App Alpine 3.17"
+ENV IMG_ARCH="linux/amd64"
+
+ENV ALPINE_VERSION="3.17"
+ENV GIN_MODE=release
+ENV GOLANG_VERSION=1.19.6
+ENV APP_URL=${APP_URL:-http://localhost}
+ENV APP_PORT=${APP_PORT:-8080}
+ENV DB_CONNECTION=${DB_CONNECTION:-sqlite}
+ENV DB_HOST=${DB_HOST:-localhost}
+ENV DB_PORT=${DB_PORT}
+ENV DB_DATABASE=${DB_DATABASE:-go-bookstore.db}
+ENV DB_USERNAME=${DB_USERNAME:-root}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV JWT_AUTH_USERNAME=${JWT_AUTH_USERNAME:-devopscorner}
+ENV JWT_AUTH_PASSWORD=${JWT_AUTH_PASSWORD:-DevOpsCorner2023}
+ENV JWT_SECRET=${JWT_SECRET:-s3cr3t}
+
+# Logger
+ENV LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+# AWS Credentials
+ENV AWS_REGION=${AWS_REGION:-us-west-2}
+ENV AWS_ACCESS_KEY=${AWS_ACCESS_KEY:-YOUR_AWS_ACCESS_KEY}
+ENV AWS_SECRET_KEY_ID=${AWS_SECRET_KEY_ID:-YOUR_AWS_SECRET_KEY_ID}
+
+# OpenSearch
+ENV OPENSEARCH_ENDPOINT=${OPENSEARCH_ENDPOINT:-https://opensearch.us-west-2.es.amazonaws.com}
+ENV OPENSEARCH_USERNAME=${OPENSEARCH_USERNAME:-devopscorner}
+ENV OPENSEARCH_PASSWORD=${OPENSEARCH_PASSWORD:-DevOpsCorner2023}
+
+# Prometheus
+ENV PROMETHEUS_ENDPOINT=${PROMETHEUS_ENDPOINT:-http://localhost:9090}
+
+# Grafana
+ENV GRAFANA_ENDPOINT=${GRAFANA_ENDPOINT:-http://localhost:3000}
+ENV GRAFANA_API_KEY=${GRAFANA_API_KEY:-YOUR_GRAFANA_API_KEY}
+
+# OpenTelemetry
+ENV OTEL_INSTRUMENTATION_METRIC_ENABLED=${OTEL_INSTRUMENTATION_METRIC_ENABLED:-true}
+ENV OTEL_INSTRUMENTATION_TRACE_ENABLED=${OTEL_INSTRUMENTATION_TRACE_ENABLED:-true}
+ENV OTEL_INSTRUMENTATION_LOG_ENABLED=${OTEL_INSTRUMENTATION_LOG_ENABLED:-true}
+ENV OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME:-bookstore-adot}
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-http://localhost:4317}
+ENV OTEL_EXPORTER_OTLP_INSECURE=${OTEL_EXPORTER_OTLP_INSECURE:-true}
+ENV OTEL_EXPORTER_OTLP_HEADERS=${OTEL_EXPORTER_OTLP_HEADERS}
+ENV OTEL_RESOURCE_ATTRIBUTES=${OTEL_RESOURCE_ATTRIBUTES}
+
+# Jaeger
+ENV JAEGER_AGENT_PORT=${JAEGER_AGENT_PORT:-6831}
+ENV JAEGER_SAMPLER_TYPE=${JAEGER_SAMPLER_TYPE:-const}
+ENV JAEGER_SAMPLER_PARAM=${JAEGER_SAMPLER_PARAM:-1}
+ENV JAEGER_SAMPLER_MANAGER_HOST_PORT=${JAEGER_SAMPLER_MANAGER_HOST_PORT}
+ENV JAEGER_REPORTER_LOG_SPANS=${JAEGER_REPORTER_LOG_SPANS:-true}
+ENV JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL=${JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL:-5}
+ENV JAEGER_REPORTER_MAX_QUEUE_SIZE=${JAEGER_REPORTER_MAX_QUEUE_SIZE:-100}
+ENV JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT=${JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT}
+ENV JAEGER_REPORTER_COLLECTOR_ENDPOINT=${JAEGER_REPORTER_COLLECTOR_ENDPOINT:-http://localhost:14268/api/traces}
+ENV JAEGER_REPORTER_COLLECTOR_USER=${JAEGER_REPORTER_COLLECTOR_USER:-devopscorner}
+ENV JAEGER_REPORTER_COLLECTOR_PASSWORD=${JAEGER_REPORTER_COLLECTOR_PASSWORD:-DevOpsCorner2023}
+ENV JAEGER_TAGS=${JAEGER_TAGS:-golang,otel,restful,api,bookstore}
+
+# X-Ray
+ENV XRAY_VERSION=${XRAY_VERSION:-latest}
+
+LABEL maintainer="$AUTHOR" \
+        architecture="$IMG_ARCH" \
+        alpine-version="$ALPINE_VERSION" \
+        org.label-schema.build-date="$BUILD_DATE" \
+        org.label-schema.name="$IMG_NAME" \
+        org.label-schema.description="$IMG_DESC" \
+        org.label-schema.vcs-ref="$GIT_COMMIT" \
+        org.label-schema.vcs-url="$GIT_URL" \
+        org.label-schema.vendor="$VENDOR" \
+        org.label-schema.version="$BUILD_VERSION" \
+        org.label-schema.schema-version="$IMG_VERSION" \
+        org.opencontainers.image.authors="$AUTHOR" \
+        org.opencontainers.image.description="$IMG_DESC" \
+        org.opencontainers.image.vendor="$VENDOR" \
+        org.opencontainers.image.version="$IMG_VERSION" \
+        org.opencontainers.image.revision="$GIT_COMMIT" \
+        org.opencontainers.image.created="$BUILD_DATE" \
+        fr.hbis.docker.base.build-date="$BUILD_DATE" \
+        fr.hbis.docker.base.name="$IMG_NAME" \
+        fr.hbis.docker.base.vendor="$VENDOR" \
+        fr.hbis.docker.base.version="$BUILD_VERSION"
+
+USER root
+
+## Install Golang with GVM ##
+RUN curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash
+RUN gvm install go${GOLANG_VERSION}; sync
+RUN gvm use go${GOLANG_VERSION} --default; sync
+
+WORKDIR /go
+
+COPY --from=builder /go/src/app/goapp /go/goapp
+COPY --from=devopscorner/k8s-context:latest /usr/local/bin/k8s-context /usr/local/bin/k8s-context
+COPY --from=devopscorner/k8s-context:latest /usr/local/bin/kc /usr/local/bin/kc
+
+COPY src /go/src
+COPY src/.env.example /go/.env
+COPY entrypoint.sh /go/entrypoint
+
+# ENTRYPOINT ["/go/goapp"]
+EXPOSE 80 443 8080

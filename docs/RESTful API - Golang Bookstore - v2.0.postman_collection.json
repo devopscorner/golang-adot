@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "7a3478d1-8835-43d5-ac56-dd45dbb6f045",
+		"name": "RESTful API - Golang bookstore-adot Localhost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "260154"
+	},
+	"item": [
+		{
+			"name": "Fetch PostmanBDD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"/* =============== DESCRIPTION FILE ======================================== */",
+							"/*                                                                           */",
+							"/*   Module  : ZEROC0D3 JSON TEST API - MyCampus.app                         */",
+							"/*   Type    : POSTMAN JSON                                                  */",
+							"/*   Author  : ZEROC0D3 Team                                                 */",
+							"/*   Date    : November 2016                                                 */",
+							"/*                                                                           */",
+							"/*  __________                  _________ _______       .___________         */",
+							"/*  \\____    /___________  ____ \\_   ___ \\\\   _  \\    __| _/\\_____  \\ Team   */",
+							"/*    /     // __ \\_  __ \\/  _ \\/    \\  \\//  /_\\  \\  / __ |   _(__  <        */   ",
+							"/*   /     /\\  ___/|  | \\(  <_> )     \\___\\  \\_/   \\/ /_/ |  /       \\       */",
+							"/*  /_______ \\___  >__|   \\____/ \\______  /\\_____  /\\____ | /______  /       */",
+							"/*          \\/   \\/                     \\/       \\/      \\/        \\/        */",
+							"/*                                                                           */",
+							"/*  ZeroC0d3 Team                                                            */  ",
+							"/*  [ N0th1ng Imp0ss1bl3, Grey Hat Coder ]                                   */",
+							"/*  --------------------------------------------------------                 */",
+							"/*  http://pastebin.com/u/zeroc0d3                                           */",
+							"/*  https://github.com/zeroc0d3                                              */",
+							"/*                                                                           */",
+							"/* ========================================================================= */",
+							"",
+							"var url_restapi = postman.getGlobalVariable(\"url_restapi\");",
+							"tests[\"Success to open welcome page => \" +url_restapi] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": "http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.min.js"
+			},
+			"response": []
+		},
+		{
+			"name": "Welcome",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{local_url}}:8080",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{local_url}}:8080/health",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ----------------------------------------- //",
+							"//  JSON Response Body                       //",
+							"// ----------------------------------------- //",
+							"/*",
+							"{",
+							"  \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6XC9cL215Y2FtcHVzLmFwcFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTQ4MDkxODgzNiwiZXhwIjoxNDgwOTIyNDM2LCJuYmYiOjE0ODA5MTg4MzYsImp0aSI6IjBhNzRiOTJjMTExNzJkYzdiNDhmMzE5MWQ4MWIyMmYyIn0.7rKJGJfwDRwxhTQql1dlWWLrrRVmIK6rwpjaxewjNZE\"",
+							"}",
+							"*/",
+							"",
+							"// ----------------------------------------- //",
+							"//  JSON Schema References                   //                              ",
+							"// ----------------------------------------- //",
+							"//  References: https://spacetelescope.github.io/understanding-json-schema/structuring.html",
+							"",
+							"var schema_test = {",
+							"    \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"    ",
+							"    \"title\":\"User Login (JWT)\",",
+							"    \"description\":\"User login\",",
+							"    ",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"type\": \"object\",",
+							"        \"properties\": {",
+							"            \"token\": { \"type\": \"string\" }",
+							"        },",
+							"        \"additionalProperties\": false,",
+							"    }",
+							"};",
+							"",
+							"",
+							"// ----------------------------------------- //",
+							"//  TESTCASE PostmanBDD                      //",
+							"// ----------------------------------------- //",
+							"//  Load external library from Environment   //",
+							"// ----------------------------------------- //",
+							"eval(postman.getGlobalVariable('module:postmanBDD'));",
+							"",
+							"var jsonParse     = pm.response; //tv4",
+							"var response_data = tv4.validateResult(responseBody, schema_test);",
+							"var title_data    = \"user login\";",
+							"",
+							"var jsonData = jsonParse.json();",
+							"var token    = jsonData.token;",
+							"",
+							"// ----------------------------------------- //",
+							"//  Set Global Variable Token                //",
+							"// ----------------------------------------- //",
+							"postman.setGlobalVariable(\"auth_token\", token);",
+							"",
+							"//tv4",
+							"tests[\"Login user succesfully go through, with token: \"+token] = response_data;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"devopscorner\",\n    \"password\": \"DevOpsCorner2023\"\n}"
+				},
+				"url": "{{local_url}}:8080/v1/login",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "List Books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{local_url}}:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Book ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{local_url}}:8080/v1/books/9",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\",\n    \"year\": \"2023\"\n}"
+				},
+				"url": "{{local_url}}:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\",\n    \"year\": \"2023\"\n}\n"
+				},
+				"url": "{{local_url}}:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\",\n    \"year\": \"2023\"\n}"
+				},
+				"url": "{{local_url}}:8080/v1/books",
+				"description": "localhost:8080/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Books 3 ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
+				},
+				"url": "{{local_url}}:8080/v1/books/9",
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Books 3",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{auth_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test Book\",\n    \"author\": \"Zeroc0D3 Lab\"\n}"
+				},
+				"url": "{{local_url}}:8080/v1/books/9",
+				"description": "localhost:8080/books/3"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,36 @@
+def GITHUB_REPO = 'https://github.com/devopscorner/golang-adot'
+
+node {
+    parameters {
+        string(name: 'HELM_ENV', defaultValue: 'lab', description: 'Enter Environment')
+        string(name: 'HELM_VERSION', defaultValue: '1.4.0-rc', description: 'Enter Version Number')
+        string(name: 'HELM_REPO_PATH', defaultValue: 's3://devopscorner-adot-chart/lab', description: 'Enter Helm Repo S3 Path')
+        string(name: 'HELM_REPO_NAME', defaultValue: 'devopscorner-lab', description: 'Enter Helm Repo Name')
+    }
+    stage('Clone'){
+       checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CloneOption', depth: 2, noTags: true, reference: '', shallow: true]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: GITHUB_REPO]]])
+    }
+    stage('Helm Push'){
+        withEnv([
+            "env=$HELM_ENV",
+            "ver=$HELM_VERSION",
+            "repo_path=$HELM_REPO_PATH",
+            "repo_name=$HELM_REPO_NAME",
+        ]) {
+            dir("template"){
+                sh '''
+                    export TERM=xterm
+                    export PATH_SCRIPT=`pwd`
+                    sh $PATH_SCRIPT/helm-push-jenkins.sh $env $ver $repo_path $repo_name
+                '''
+            }
+        }
+    }
+    stage('Helm Update'){
+        sh '''
+            export TERM=xterm
+            export PATH_SCRIPT=`pwd`
+            helm repo update
+        '''
+    }
+}

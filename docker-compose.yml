@@ -1,0 +1,126 @@
+version: '3.7'
+
+#================================================================================================
+# NETWORK SETUP
+#================================================================================================
+networks:
+  devopscorner_net:
+    name: devopscorner_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.148.0.0/16
+
+#================================================================================================
+# VOLUME SETUP
+#================================================================================================
+volumes:
+  vol_portainer:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_PORTAINER:-/opt/data/docker/portainer2.9}
+  vol_go_bookstore_adot:
+    driver: ${VOLUMES_DRIVER:-local}
+    driver_opts:
+      o: bind
+      type: none
+      device: ${DATA_GO_BOOKSTORE_ADOT:-/opt/data/docker/go-bookstore-adot}
+
+services:
+  #================================================================================================
+  # PORTAINER
+  #================================================================================================
+  portainer:
+    image: dockerframework/portainer:${PORTAINER_VERSION:-2.9}
+    container_name: ${CONTAINER_PORTAINER:-devopscorner_portainer}
+    restart: unless-stopped
+    ports:
+      - "${PORT_PORTAINER:-5212}:9000"
+    volumes:
+    # - /etc/localtime:/etc/localtime:ro          ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
+      - vol_portainer:/data
+    environment:
+      - PORTAINER_TEMPLATE=generic
+      - PORTAINER_VERSION=${PORTAINER_VERSION:-2.9}
+    privileged: true
+    networks:
+      devopscorner_net:
+        ipv4_address: ${CONTAINER_IP_PORTAINER:-172.148.148.5}
+
+  #================================================================================================
+  # GOLANG-BOOKSTORE-ADOT
+  #================================================================================================
+  go-bookstore-adot:
+    build:
+      context: .
+      dockerfile: Dockerfile-amd64
+    container_name: ${CONTAINER_GO_BOOKSTORE_ADOT:-devopscorner_go_bookstore_adot}
+    restart: unless-stopped
+    ports:
+      - "${PORT_GO_BOOKSTORE_ADOT:-8080}:8080"
+    volumes:
+    # - /etc/localtime:/etc/localtime:ro          ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock ## Do not use it in k8s
+    environment:
+      - TZ="Asia/Jakarta"
+      - ALPINE_VERSION=${ALPINE_VERSION:-3.17}
+      - CODEBUILD_VERSION=${CODEBUILD_VERSION:-4.0}
+      - GIN_MODE=release
+      - APP_URL=${APP_URL:-http://localhost}
+      - APP_PORT=${APP_PORT:-8080}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      - DB_HOST=${DB_HOST:-localhost}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE:-go-bookstore.db}
+      - DB_USERNAME=${DB_USERNAME:-root}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_AUTH_USERNAME=${JWT_AUTH_USERNAME:-devopscorner}
+      - JWT_AUTH_PASSWORD=${JWT_AUTH_PASSWORD:-DevOpsCorner2023}
+      - JWT_SECRET=${JWT_SECRET:-s3cr3t}
+      # Logger
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      # AWS Credentials
+      - AWS_REGION=${AWS_REGION:-us-west-2}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY:-YOUR_AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY_ID=${AWS_SECRET_KEY_ID:-YOUR_AWS_SECRET_KEY_ID}
+      # OpenSearch
+      - OPENSEARCH_ENDPOINT=${OPENSEARCH_ENDPOINT:-https://opensearch.us-west-2.es.amazonaws.com}
+      - OPENSEARCH_USERNAME=${OPENSEARCH_USERNAME:-devopscorner}
+      - OPENSEARCH_PASSWORD=${OPENSEARCH_PASSWORD:-DevOpsCorner2023}
+      # Prometheus
+      - PROMETHEUS_ENDPOINT=${PROMETHEUS_ENDPOINT:-http://localhost:9090}
+      # Grafana
+      - GRAFANA_ENDPOINT=${GRAFANA_ENDPOINT:-http://localhost:3000}
+      - GRAFANA_API_KEY=${GRAFANA_API_KEY:-YOUR_GRAFANA_API_KEY}
+      # OpenTelemetry
+      - OTEL_INSTRUMENTATION_METRIC_ENABLED=${OTEL_INSTRUMENTATION_METRIC_ENABLED:-true}
+      - OTEL_INSTRUMENTATION_TRACE_ENABLED=${OTEL_INSTRUMENTATION_TRACE_ENABLED:-true}
+      - OTEL_INSTRUMENTATION_LOG_ENABLED=${OTEL_INSTRUMENTATION_LOG_ENABLED:-true}
+      - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME:-bookstore-adot}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-http://localhost:4317}
+      - OTEL_EXPORTER_OTLP_INSECURE=${OTEL_EXPORTER_OTLP_INSECURE:-true}
+      - OTEL_EXPORTER_OTLP_HEADERS=${OTEL_EXPORTER_OTLP_HEADERS}
+      - OTEL_RESOURCE_ATTRIBUTES=${OTEL_RESOURCE_ATTRIBUTES}
+      # Jaeger
+      - JAEGER_AGENT_PORT=${JAEGER_AGENT_PORT:-6831}
+      - JAEGER_SAMPLER_TYPE=${JAEGER_SAMPLER_TYPE:-const}
+      - JAEGER_SAMPLER_PARAM=${JAEGER_SAMPLER_PARAM:-1}
+      - JAEGER_SAMPLER_MANAGER_HOST_PORT=${JAEGER_SAMPLER_MANAGER_HOST_PORT}
+      - JAEGER_REPORTER_LOG_SPANS=${JAEGER_REPORTER_LOG_SPANS:-true}
+      - JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL=${JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL:-5}
+      - JAEGER_REPORTER_MAX_QUEUE_SIZE=${JAEGER_REPORTER_MAX_QUEUE_SIZE:-100}
+      - JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT=${JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT}
+      - JAEGER_REPORTER_COLLECTOR_ENDPOINT=${JAEGER_REPORTER_COLLECTOR_ENDPOINT:-http://localhost:14268/api/traces}
+      - JAEGER_REPORTER_COLLECTOR_USER=${JAEGER_REPORTER_COLLECTOR_USER:-devopscorner}
+      - JAEGER_REPORTER_COLLECTOR_PASSWORD=${JAEGER_REPORTER_COLLECTOR_PASSWORD:-DevOpsCorner2023}
+      - JAEGER_TAGS=${JAEGER_TAGS:-golang,otel,restful,api,bookstore}
+      # X-Ray
+      - XRAY_VERSION=${XRAY_VERSION:-latest}
+    privileged: true
+    tty: true
+    networks:
+      devopscorner_net:
+        ipv4_address: ${CONTAINER_IP_GO_BOOKSTORE_ADOT:-172.148.148.225}
