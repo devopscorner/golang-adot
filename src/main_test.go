@@ -35,7 +35,7 @@ func TestMain(m *testing.M) {
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
-func Testbookstore-adotAPI(t *testing.T) {
+func TestBookstoreAPI(t *testing.T) {
 	req, err := http.NewRequest(http.MethodGet, "/v1/books", nil)
 	assert.NoError(t, err)
 
