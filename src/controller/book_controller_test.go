@@ -18,7 +18,7 @@ var (
 	routerBook *gin.Engine
 )
 
-func TestBookController_Main() {
+func TestBookController_Main(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	config.LoadConfig()
 	routerBook = gin.Default()
