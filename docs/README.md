@@ -44,6 +44,7 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
   7. Provisioning Resources Managed Services Prometheus (AMP), detail [here](reproduce-07-provisioning-resources-amp.md)
   8. Provisioning Resources Managed Services Grafana (AMG), detail [here](reproduce-08-provisioning-resources-amg.md)
   9. Provisioning Resources Managed Services OpenSearch, detail [here](reproduce-09-provisioning-resources-opensearch.md)
+  10. Provisioning Resources EKS ADOT Collector, detail [here](reproduce-10-provisioning-resources-eks-adot-collector.md)
 
 ## Reproduce Testing
 
