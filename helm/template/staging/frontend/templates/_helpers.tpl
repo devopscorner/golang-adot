@@ -24,16 +24,16 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart stagingel.
+Create chart name and version as used by the chart prodel.
 */}}
 {{- define "frontend.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Common stagingels
+Common labels
 */}}
-{{- define "frontend.stagingels" -}}
+{{- define "frontend.labels" -}}
 helm.sh/chart: {{ include "frontend.chart" . }}
 {{ include "frontend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -43,7 +43,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector stagingels
+Selector labels
 */}}
 {{- define "frontend.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "frontend.name" . }}

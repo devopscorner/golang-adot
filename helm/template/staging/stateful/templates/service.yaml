@@ -3,8 +3,8 @@ kind: Service
 metadata:
   name: {{ include "stateful.fullname" . }}
   namespace: {{ .Values.serviceAccount.namespace }}
-  stagingels:
-    {{- include "stateful.stagingels" . | nindent 4 }}
+  labels:
+    {{- include "stateful.labels" . | nindent 4 }}
 spec:
   {{- if .Values.service }}
   type: {{ .Values.service.type }}

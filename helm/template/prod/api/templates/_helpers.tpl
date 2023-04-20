@@ -31,9 +31,9 @@ Create chart name and version as used by the chart prodel.
 {{- end }}
 
 {{/*
-Common prodels
+Common labels
 */}}
-{{- define "api.prodels" -}}
+{{- define "api.labels" -}}
 helm.sh/chart: {{ include "api.chart" . }}
 {{ include "api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -43,7 +43,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector prodels
+Selector labels
 */}}
 {{- define "api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "api.name" . }}

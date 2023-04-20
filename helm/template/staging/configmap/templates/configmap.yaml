@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMap.name }}
   namespace: {{ .Values.serviceAccount.namespace }}
-  stagingels:
-    {{- include "configmap.stagingels" . | nindent 4 }}
+  labels:
+    {{- include "configmap.labels" . | nindent 4 }}
 {{- with .Values.configMap.data }}
 data:
   {{- toYaml . | nindent 2 }}

@@ -31,9 +31,9 @@ Create chart name and version as used by the chart prodel.
 {{- end }}
 
 {{/*
-Common prodels
+Common labels
 */}}
-{{- define "svcrole.prodels" -}}
+{{- define "svcrole.labels" -}}
 helm.sh/chart: {{ include "svcrole.chart" . }}
 {{ include "svcrole.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -43,7 +43,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector prodels
+Selector labels
 */}}
 {{- define "svcrole.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "svcrole.name" . }}

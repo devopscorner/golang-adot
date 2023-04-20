@@ -8,7 +8,7 @@ metadata:
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
-  prodels:
+  labels:
     app: {{ template "stateful.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"

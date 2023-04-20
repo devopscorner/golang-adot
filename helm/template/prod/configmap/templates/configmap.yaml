@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMap.name }}
   namespace: {{ .Values.serviceAccount.namespace }}
-  prodels:
-    {{- include "configmap.prodels" . | nindent 4 }}
+  labels:
+    {{- include "configmap.labels" . | nindent 4 }}
 {{- with .Values.configMap.data }}
 data:
   {{- toYaml . | nindent 2 }}

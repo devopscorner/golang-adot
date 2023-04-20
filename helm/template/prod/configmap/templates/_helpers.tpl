@@ -31,9 +31,9 @@ Create chart name and version as used by the chart prodel.
 {{- end }}
 
 {{/*
-Common prodels
+Common labels
 */}}
-{{- define "configmap.prodels" -}}
+{{- define "configmap.labels" -}}
 helm.sh/chart: {{ include "configmap.chart" . }}
 {{ include "configmap.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -43,7 +43,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector prodels
+Selector labels
 */}}
 {{- define "configmap.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "configmap.name" . }}
