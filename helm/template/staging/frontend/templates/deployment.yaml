@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: {{ include "frontend.fullname" . }}
   namespace: {{ .Values.serviceAccount.namespace }}
-  stagingels:
-    {{- include "frontend.stagingels" . | nindent 4 }}
+  labels:
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -18,7 +18,7 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      stagingels:
+      labels:
         {{- include "frontend.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -37,10 +37,6 @@ spec:
           {{- if .Values.application.enabled }}
           env:
             {{- toYaml .Values.application.env | nindent 12 }}
-          {{- end }}
-          {{- if .Values.envFrom.enabled }}
-          envFrom:
-            {{- toYaml .Values.envFrom.envFrom | nindent 12 }}
           {{- end }}
           {{- if .Values.container }}
           ports:

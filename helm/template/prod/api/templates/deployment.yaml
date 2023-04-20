@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: {{ include "api.fullname" . }}
   namespace: {{ .Values.serviceAccount.namespace }}
-  prodels:
-    {{- include "api.prodels" . | nindent 4 }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -19,7 +19,7 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      prodels:
+      labels:
         {{- include "api.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -38,10 +38,6 @@ spec:
           {{- if .Values.application.enabled }}
           env:
             {{- toYaml .Values.application.env | nindent 12 }}
-          {{- end }}
-          {{- if .Values.envFrom.enabled }}
-          envFrom:
-            {{- toYaml .Values.envFrom.envFrom | nindent 12 }}
           {{- end }}
           {{- if .Values.container }}
           ports:

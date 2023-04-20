@@ -8,8 +8,8 @@ apiVersion: extensions/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  prodels:
-    {{- include "api.prodels" . | nindent 4 }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

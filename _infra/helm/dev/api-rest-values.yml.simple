@@ -102,10 +102,6 @@ application:
     # ======================== #
     - name: DB_CONNECTION
       value: dynamo
-    - name: DB_HOST
-      value: "http://localhost"
-    - name: DB_PORT
-      value: ""
     - name: DB_DATABASE
       value: dynamodb-golang-adot
     - name: DB_USERNAME
@@ -191,62 +187,11 @@ application:
     # ======================== #
     #  OpenTelemetry           #
     # ======================== #
-    - name: OTEL_INSTRUMENTATION_METRIC_ENABLED
-      value: "true"
-    - name: OTEL_INSTRUMENTATION_TRACE_ENABLED
-      value: "true"
-    - name: OTEL_INSTRUMENTATION_LOG_ENABLED
-      value: "true"
     # Trace Type: xray / jaeger
     - name: OTEL_INSTRUMENTATION_TRACE_NAME
       value: xray
     - name: OTEL_SERVICE_NAME
       value: bookstore-adot
-    - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://localhost:4317
-    - name: OTEL_EXPORTER_OTLP_PORT
-      value: "4317"
-    - name: OTEL_EXPORTER_OTLP_INSECURE
-      value: "true"
-    - name: OTEL_EXPORTER_OTLP_HEADERS
-      value: ""
-    - name: OTEL_RESOURCE_ATTRIBUTES
-      value: ""
-    # ======================== #
-    #  Jaeger                  #
-    # ======================== #
-    - name: JAEGER_AGENT_PORT
-      value: "6831"
-    # Sampler Type: const / probabilistic / rateLimiting / remote
-    - name: JAEGER_SAMPLER_TYPE
-      value: const
-    - name: JAEGER_SAMPLER_PARAM
-      value: "1"
-    - name: JAEGER_SAMPLER_MANAGER_HOST_PORT
-      value: "5000"
-    - name: JAEGER_REPORTER_LOG_SPANS
-      value: "true"
-    # Interval in seconds (5*time.Second)
-    - name: JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL
-      value: "5*time.Second"
-    - name: JAEGER_REPORTER_MAX_QUEUE_SIZE
-      value: "100"
-    - name: JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT
-      value: "5001"
-    - name: JAEGER_REPORTER_COLLECTOR_ENDPOINT
-      value: http://localhost:14268/api/traces
-    - name: JAEGER_REPORTER_COLLECTOR_USER
-      valueFrom:
-        secretKeyRef:
-          name: golang-adot-secret
-          key: jaeger_reporter_collector_user
-    - name: JAEGER_REPORTER_COLLECTOR_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: golang-adot-secret
-          key: jaeger_reporter_collector_password
-    - name: JAEGER_TAGS
-      value: "golang,otel,restful,api,bookstore"
     # ======================== #
     #  X-Ray                   #
     #   - latest               #
