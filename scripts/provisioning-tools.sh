@@ -23,21 +23,21 @@ helm search repo aws-otel-collector
 
 kubectl create namespace observability
 
-helm upgrade --install prometheus prometheus-community/prometheus -n observability --set server.nodeSelector."node"="devops-monitoring"
-helm upgrade --install opensearch opensearch/opensearch -n observability --set server.nodeSelector."node"="devops-monitoring"
-helm upgrade --install opensearch-operator opensearch-operator/opensearch-operator -n observability --set server.nodeSelector."node"="devops-monitoring"
+helm upgrade --install prometheus prometheus-community/prometheus -n observability --set server.nodeSelector."node"="devopscorner-monitoring"
+helm upgrade --install opensearch opensearch/opensearch -n observability --set server.nodeSelector."node"="devopscorner-monitoring"
+helm upgrade --install opensearch-operator opensearch-operator/opensearch-operator -n observability --set server.nodeSelector."node"="devopscorner-monitoring"
 
 # kubectl get pods --namespace=observability -l app.kubernetes.io/component=opensearch-cluster-master -w
 
 kubectl -f manifest-grafana.yml -n observability apply
 
-helm upgrade --install opensearch-dashboard opensearch/opensearch-dashboards -n observability --set server.nodeSelector."node"="devops-monitoring"
+helm upgrade --install opensearch-dashboard opensearch/opensearch-dashboards -n observability --set server.nodeSelector."node"="devopscorner-monitoring"
 # export POD_NAME=$(kubectl get pods --namespace observability -l "app.kubernetes.io/name=opensearch-dashboards,app.kubernetes.io/instance=opensearch-dashboard" -o jsonpath="{.items[0].metadata.name}")
 # export CONTAINER_PORT=$(kubectl get pod --namespace observability $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
 # echo "Visit http://127.0.0.1:8080 to use your application"
 # kubectl --namespace observability port-forward $POD_NAME 8080:$CONTAINER_PORT
 
-helm upgrade --install fluent-bit fluent/fluent-bit -n observability --set server.nodeSelector."node"="devops-monitoring"
+helm upgrade --install fluent-bit fluent/fluent-bit -n observability --set server.nodeSelector."node"="devopscorner-monitoring"
 # export POD_NAME=$(kubectl get pods --namespace observability -l "app.kubernetes.io/name=fluent-bit,app.kubernetes.io/instance=fluent-bit" -o jsonpath="{.items[0].metadata.name}")
 # kubectl --namespace observability port-forward $POD_NAME 2020:2020
 # curl http://127.0.0.1:2020

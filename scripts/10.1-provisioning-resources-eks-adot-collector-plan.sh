@@ -1,4 +1,4 @@
-# Provisioning Managed Services Grafana (AMG)
+# Provisioning EKS ADOT Collector
 
 #!/usr/bin/env sh
 
@@ -20,7 +20,7 @@ export TF_INFRA_PATH="$REPO_PATH/$TF_PATH/environment/providers/aws/infra"
 export TF_CORE_PATH="$TF_INFRA_PATH/core"
 export TF_RESOURCES_PATH="$TF_INFRA_PATH/resources"
 export TF_STATE_PATH="$TF_INFRA_PATH/tfstate"
-export TF_OPENSEARCH_PATH="$TF_RESOURCES_PATH/amg"
+export TF_AMG_PATH="$TF_RESOURCES_PATH/eks-adot-collector"
 
 export WORKSPACE_ENV="prod"
 
@@ -34,10 +34,10 @@ get_time() {
 cleanup_terraform() {
     echo $line2
     echo " Cleanup Terraform Core..."
-    echo " \$ rm -rf .terraform .terraform.lock.hcl terraform.amg.d"
+    echo " \$ rm -rf .terraform .terraform.lock.hcl terraform.eks-adot-collector.d"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
-    rm -rf .terraform .terraform.lock.hcl terraform.amg.d
+    cd $TF_AMG_PATH
+    rm -rf .terraform .terraform.lock.hcl terraform.eks-adot-collector.d
     echo ''
     echo ' - DONE - '
     echo ''
@@ -49,7 +49,7 @@ terraform_init() {
     echo " Initialize Terraform..."
     echo " \$ terraform init"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     terraform init
     echo ''
     echo ' - DONE - '
@@ -62,7 +62,7 @@ terraform_workspace() {
     echo " Create / Select Terraform Workspace..."
     echo " \$ terraform workspace select $WORKSPACE_ENV || terraform workspace new $WORKSPACE_ENV"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     terraform workspace select $WORKSPACE_ENV || terraform workspace new $WORKSPACE_ENV
     echo ''
     echo ' - DONE - '
@@ -75,7 +75,7 @@ terraform_plan() {
     echo " Terraform Plan & Save Binary Plan..."
     echo " \$ terraform plan --out tfplan.binary"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     terraform plan --out tfplan.binary
     echo ''
     echo ' - DONE - '
@@ -88,7 +88,7 @@ terraform_save_plan() {
     echo " Export JSON Terraform Plan..."
     echo " \$ terraform show -json tfplan.binary > tfplan.json"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     terraform show -json tfplan.binary > tfplan.json
     echo ''
     echo ' - DONE - '
@@ -101,7 +101,7 @@ terraform_security() {
     echo " Running Security Inspect Terraform..."
     echo " \$ terraform show -json tfplan.binary > tfplan.json"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     # ================== #
     #  Terraform Addons  #
     # ================== #
@@ -142,7 +142,7 @@ terraform_cost_review() {
     echo " Cost Review Terraform..."
     echo " \$ infracost breakdown --path tfplan.json"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     # ~ Infracost
     infracost breakdown --path tfplan.json
     echo ''
@@ -156,7 +156,7 @@ terraform_apply() {
     echo " Apply Terraform..."
     echo " \$ terraform apply -auto-approve"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     # ======================== #
     #  Terraform Provisioning  #
     # ======================== #
@@ -172,7 +172,7 @@ terraform_destroy() {
     echo " Cleanup TFState..."
     echo " \$ terraform destroy -auto-approve"
     echo $line2
-    cd $TF_OPENSEARCH_PATH
+    cd $TF_AMG_PATH
     # =================== #
     #  Terraform Destroy  #
     # =================== #

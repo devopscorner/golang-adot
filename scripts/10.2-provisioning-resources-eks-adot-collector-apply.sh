@@ -1,4 +1,4 @@
-# Provisioning Managed OpenSearch
+# Provisioning EKS ADOT Collector
 
 #!/usr/bin/env sh
 
@@ -20,7 +20,7 @@ export TF_INFRA_PATH="$REPO_PATH/$TF_PATH/environment/providers/aws/infra"
 export TF_CORE_PATH="$TF_INFRA_PATH/core"
 export TF_RESOURCES_PATH="$TF_INFRA_PATH/resources"
 export TF_STATE_PATH="$TF_INFRA_PATH/tfstate"
-export TF_OPENSEARCH_PATH="$TF_RESOURCES_PATH/opensearch"
+export TF_OPENSEARCH_PATH="$TF_RESOURCES_PATH/eks-adot-collector"
 
 export WORKSPACE_ENV="prod"
 

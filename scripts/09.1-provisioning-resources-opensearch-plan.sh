@@ -1,4 +1,4 @@
-# Provisioning Managed Services Grafana (AMG)
+# Provisioning Managed OpenSearch
 
 #!/usr/bin/env sh
 
@@ -20,7 +20,7 @@ export TF_INFRA_PATH="$REPO_PATH/$TF_PATH/environment/providers/aws/infra"
 export TF_CORE_PATH="$TF_INFRA_PATH/core"
 export TF_RESOURCES_PATH="$TF_INFRA_PATH/resources"
 export TF_STATE_PATH="$TF_INFRA_PATH/tfstate"
-export TF_AMG_PATH="$TF_RESOURCES_PATH/amg"
+export TF_AMG_PATH="$TF_RESOURCES_PATH/opensearch"
 
 export WORKSPACE_ENV="prod"
 
@@ -34,10 +34,10 @@ get_time() {
 cleanup_terraform() {
     echo $line2
     echo " Cleanup Terraform Core..."
-    echo " \$ rm -rf .terraform .terraform.lock.hcl terraform.amg.d"
+    echo " \$ rm -rf .terraform .terraform.lock.hcl terraform.opensearch.d"
     echo $line2
     cd $TF_AMG_PATH
-    rm -rf .terraform .terraform.lock.hcl terraform.amg.d
+    rm -rf .terraform .terraform.lock.hcl terraform.opensearch.d
     echo ''
     echo ' - DONE - '
     echo ''

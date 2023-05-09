@@ -1,4 +1,4 @@
-# Provisioning Managed OpenSearch
+# Destroy EKS ADOT Collector
 
 #!/usr/bin/env sh
 
@@ -20,7 +20,7 @@ export TF_INFRA_PATH="$REPO_PATH/$TF_PATH/environment/providers/aws/infra"
 export TF_CORE_PATH="$TF_INFRA_PATH/core"
 export TF_RESOURCES_PATH="$TF_INFRA_PATH/resources"
 export TF_STATE_PATH="$TF_INFRA_PATH/tfstate"
-export TF_OPENSEARCH_PATH="$TF_RESOURCES_PATH/opensearch"
+export TF_OPENSEARCH_PATH="$TF_RESOURCES_PATH/eks-adot-collector"
 
 export WORKSPACE_ENV="prod"
 
@@ -44,16 +44,16 @@ terraform_workspace() {
     sleep 1
 }
 
-terraform_apply() {
+terraform_destroy() {
     echo $line2
-    echo " Apply Terraform..."
-    echo " \$ terraform apply -auto-approve"
+    echo " Cleanup TFState..."
+    echo " \$ terraform destroy -auto-approve"
     echo $line2
     cd $TF_OPENSEARCH_PATH
-    # ======================== #
-    #  Terraform Provisioning  #
-    # ======================== #
-    terraform apply -auto-approve
+    # =================== #
+    #  Terraform Destroy  #
+    # =================== #
+    terraform destroy -auto-approve
     echo ''
     echo ' - DONE - '
     echo ''
@@ -62,7 +62,7 @@ terraform_apply() {
 
 main() {
     terraform_workspace
-    terraform_apply
+    terraform_destroy
     echo ''
     echo '-- ALL DONE --'
 }
