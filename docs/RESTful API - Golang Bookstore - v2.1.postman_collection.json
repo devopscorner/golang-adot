@@ -20,6 +20,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -81,9 +84,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{api_url}}:8080",
+					"raw": "{{api_url_elb}}:8080",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080"
 				},
@@ -124,9 +127,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/health",
+					"raw": "{{api_url_elb}}:8080/health",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -170,9 +173,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/metrics",
+					"raw": "{{api_url_elb}}:8080/metrics",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -271,9 +274,9 @@
 					"raw": "{\n    \"username\": \"devopscorner\",\n    \"password\": \"DevOpsCorner2023\"\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/login",
+					"raw": "{{api_url_elb}}:8080/v1/login",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -302,9 +305,9 @@
 					}
 				],
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books",
+					"raw": "{{api_url_elb}}:8080/v1/books",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -333,15 +336,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books/1681899565360226000",
+					"raw": "{{api_url_elb}}:8080/v1/books/1682647627893145000",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
 						"v1",
 						"books",
-						"1681899565360226000"
+						"1682647627893145000"
 					]
 				},
 				"description": "localhost:8080/books"
@@ -369,9 +372,9 @@
 					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\",\n    \"year\": \"2023\"\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books",
+					"raw": "{{api_url_elb}}:8080/v1/books",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -404,9 +407,9 @@
 					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\",\n    \"year\": \"2023\"\n}\n"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books",
+					"raw": "{{api_url_elb}}:8080/v1/books",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -439,9 +442,9 @@
 					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\",\n    \"year\": \"2023\"\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books",
+					"raw": "{{api_url_elb}}:8080/v1/books",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
@@ -474,15 +477,15 @@
 					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books/1680783116427044000",
+					"raw": "{{api_url_elb}}:8080/v1/books/1683494642461344000",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
 						"v1",
 						"books",
-						"1680783116427044000"
+						"1683494642461344000"
 					]
 				},
 				"description": "localhost:8080/books/3"
@@ -510,15 +513,15 @@
 					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
 				"url": {
-					"raw": "{{api_url}}:8080/v1/books/10",
+					"raw": "{{api_url_elb}}:8080/v1/books/1683494642461344000",
 					"host": [
-						"{{api_url}}"
+						"{{api_url_elb}}"
 					],
 					"port": "8080",
 					"path": [
 						"v1",
 						"books",
-						"10"
+						"1683494642461344000"
 					]
 				},
 				"description": "localhost:8080/books/3"

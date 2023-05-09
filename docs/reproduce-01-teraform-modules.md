@@ -2,7 +2,7 @@
 
 ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API Application (Bookstore)
 
-[goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)
+[![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)
 ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-adot)
 ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-adot?sort=semver)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore-adot.svg)](https://hub.docker.com/r/devopscorner/bookstore-adot/)
@@ -34,4 +34,3 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
 ### Check Modules Installed
 
     ls -alR terraform/modules/providers/aws/
-

@@ -20,6 +20,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -68,7 +71,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "{{api_url}}:8080",
+				"url": "{{api_url_elb}}:8080",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -105,7 +108,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "{{api_url}}:8080/health",
+				"url": "{{api_url_elb}}:8080/health",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -142,7 +145,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": "{{api_url}}:8080/metrics",
+				"url": "{{api_url_elb}}:8080/metrics",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -234,7 +237,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"username\": \"devopscorner\",\n    \"password\": \"DevOpsCorner2023\"\n}"
 				},
-				"url": "{{api_url}}:8080/v1/login",
+				"url": "{{api_url_elb}}:8080/v1/login",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -255,7 +258,7 @@
 						"type": "text"
 					}
 				],
-				"url": "{{api_url}}:8080/v1/books",
+				"url": "{{api_url_elb}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -276,7 +279,7 @@
 						"type": "text"
 					}
 				],
-				"url": "{{api_url}}:8080/v1/books/1681899565360226000",
+				"url": "{{api_url_elb}}:8080/v1/books/1682647627893145000",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -301,7 +304,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Mastering Go: Create Golang production applications using network libraries, concurrency, and advanced Go data structures\",\n    \"author\": \"Mihalis Tsoukalos\",\n    \"year\": \"2023\"\n}"
 				},
-				"url": "{{api_url}}:8080/v1/books",
+				"url": "{{api_url_elb}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -326,7 +329,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Introducing Go: Build Reliable, Scalable Programs\",\n    \"author\": \"Caleb Doxsey\",\n    \"year\": \"2023\"\n}\n"
 				},
-				"url": "{{api_url}}:8080/v1/books",
+				"url": "{{api_url_elb}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -351,7 +354,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"Learning Functional Programming in Go: Change the way you approach your applications using functional programming in Go\",\n    \"author\": \"Lex Sheehan\",\n    \"year\": \"2023\"\n}"
 				},
-				"url": "{{api_url}}:8080/v1/books",
+				"url": "{{api_url_elb}}:8080/v1/books",
 				"description": "localhost:8080/books"
 			},
 			"response": []
@@ -376,7 +379,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
-				"url": "{{api_url}}:8080/v1/books/1680783116427044000",
+				"url": "{{api_url_elb}}:8080/v1/books/1683494642461344000",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []
@@ -401,7 +404,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"DevOpsCorner\",\n    \"author\": \"DevOpsCorner Indonesia\",\n    \"year\": \"2024\"\n}"
 				},
-				"url": "{{api_url}}:8080/v1/books/10",
+				"url": "{{api_url_elb}}:8080/v1/books/1683494642461344000",
 				"description": "localhost:8080/books/3"
 			},
 			"response": []

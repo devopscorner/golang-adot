@@ -54,68 +54,125 @@ go run main_test.go
 ├── .env
 ├── .env.example
 ├── config
-│   ├── config.go
-│   ├── config_test.go
-│   ├── const.go
-│   ├── logger.go
-│   └── value.go
+│   ├── config.go
+│   ├── config_test.go
+│   ├── const.go
+│   ├── logger.go
+│   └── value.go
 ├── controller
-│   ├── book_controller.go
-│   ├── book_controller_test.go
-│   ├── login_controller.go
-│   └── login_controller_test.go
+│   ├── book_controller.go
+│   ├── book_controller_test.go
+│   ├── login_controller.go
+│   └── login_controller_test.go
 ├── driver
-│   ├── db.go
-│   ├── dynamo.go
-│   ├── mysql.go
-│   ├── psql.go
-│   └── sqlite.go
-├── dynamodb-golang-adot
+│   ├── db.go
+│   ├── dynamodb.go
+│   ├── mysql.go
+│   ├── psql.go
+│   └── sqlite.go
 ├── go.mod
 ├── go.sum
 ├── main.go
 ├── main_test.go
 ├── middleware
-│   ├── auth_middleware.go
-│   └── auth_middleware_test.go
+│   ├── auth_middleware.go
+│   └── auth_middleware_test.go
 ├── migrate_book.go.example
 ├── migrate_book_dynamo.go.example
 ├── model
-│   └── book.go
+│   └── book.go
 ├── observability
-│   ├── metrics.go
-│   ├── provider.go
-│   └── xray.go
+│   ├── metrics.go
+│   ├── provider.go
+│   ├── tracing-otel.go
+│   └── tracing-xray.go
 ├── repository
-│   └── book_repository.go
+│   └── book_repository.go
 ├── routes
-│   ├── book_routes.go
-│   ├── main_routes.go
-│   └── telemetry_routes.go
+│   ├── book_routes.go
+│   ├── main_routes.go
+│   ├── telemetry_routes.go
+│   └── tracing_routes.go
 └── view
     ├── book_view.go
     ├── error_view.go
     └── login_view.go
 
-10 directories, 36 files
+10 directories, 37 files
 ```
 
 ## Environment Variables (Default)
 
 ```
 GIN_MODE=release
-APP_URL=http://localhost
+APP_URL=http://0.0.0.0
 APP_PORT=8080
-DB_CONNECTION=sqlite
-DB_REGION=us-west-2
-DB_HOST=localhost
-DB_PORT=
-DB_DATABASE=go-bookstore-adot.db
+
+# Connection Type: sqlite / mysql / postgres / dynamo
+DB_CONNECTION=dynamo
+DB_HOST=0.0.0.0
+DB_PORT=5000
+DB_DATABASE=dynamodb-golang-adot
 DB_USERNAME=root
 DB_PASSWORD=
+
 JWT_AUTH_USERNAME=devopscorner
 JWT_AUTH_PASSWORD=DevOpsCorner2023
 JWT_SECRET=s3cr3t
+
+LOG_LEVEL=INFO
+
+AWS_REGION=us-west-2
+AWS_ACCESS_KEY=YOUR_AWS_KEY
+AWS_SECRET_KEY_ID=YOUR_SECRET_KEY
+
+OPENSEARCH_ENDPOINT=https://opensearch.us-west-2.es.amazonaws.com
+OPENSEARCH_USERNAME=devopscorner
+OPENSEARCH_PASSWORD=DevOpsCorner2023
+
+PROMETHEUS_ENDPOINT=http://0.0.0.0:9090
+PROMETHEUS_PORT=9090
+
+GRAFANA_ENDPOINT=http://0.0.0.0:3000
+GRAFANA_API_KEY=YOUR_GRAFANA_API_KEY
+
+OTEL_INSTRUMENTATION_METRIC_ENABLED=true
+OTEL_INSTRUMENTATION_TRACE_ENABLED=true
+OTEL_INSTRUMENTATION_LOG_ENABLED=true
+
+# Trace Type: xray / jaeger
+OTEL_INSTRUMENTATION_TRACE_NAME=xray
+
+OTEL_SERVICE_NAME=bookstore-adot
+OTEL_EXPORTER_OTLP_ENDPOINT=http://0.0.0.0:4317
+OTEL_EXPORTER_OTLP_PORT=4317
+OTEL_EXPORTER_OTLP_INSECURE=true
+OTEL_EXPORTER_OTLP_HEADERS=
+OTEL_RESOURCE_ATTRIBUTES=
+OTEL_TIME_INTERVAL=1
+OTEL_RANDOM_TIME_ALIVE_INCREMENTER=1
+OTEL_RANDOM_TOTAL_HEAP_SIZE_UPPER_BOUND=100
+OTEL_RANDOM_THREAD_ACTIVE_UPPOR_BOUND=10
+OTEL_RANDOM_CPU_USAGE_UPPER_BOUND=100
+
+XRAY_VERSION=latest
+XRAY_DAEMON_ENDPOINT=https://xray.us-west-2.amazonaws.com
+XRAY_DAEMON_PORT=2000
+
+JAEGER_AGENT_PORT=6831
+# Sampler Type: const / probabilistic / rateLimiting / remote
+JAEGER_SAMPLER_TYPE=const
+JAEGER_SAMPLER_PARAM=1
+JAEGER_SAMPLER_MANAGER_HOST_PORT=http://0.0.0.0:5778
+JAEGER_REPORTER_LOG_SPANS=true
+# Interval in seconds (5*time.Second)
+JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL="5*time.Second"
+JAEGER_REPORTER_MAX_QUEUE_SIZE=100
+JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT=http://0.0.0.0:6831
+JAEGER_REPORTER_COLLECTOR_ENDPOINT=http://0.0.0.0:14268/api/traces
+JAEGER_REPORTER_COLLECTOR_USER=devopscorner
+JAEGER_REPORTER_COLLECTOR_PASSWORD=DevOpsCorner2023
+JAEGER_TAGS=golang,otel,restful,api,bookstore
 ```
 
 ## Multi Driver Connection
