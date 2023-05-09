@@ -93,6 +93,44 @@ resource "aws_eks_node_group" "goapp" {
 }
 
 # ------------------------------------
+#  EBS Volume
+# ------------------------------------
+# resource "aws_ebs_volume" "goapp_ebs" {
+#   for_each = (local.env == "prod" ? toset(["prod"]) : toset(["dev", "uat"]))
+
+#   availability_zone = data.aws_availability_zones.available.names[0]
+#   size              = 20
+#   type              = "gp3"
+#   tags = merge(
+#     {
+#       "ClusterName"                                                             = "${var.eks_cluster_name}-${var.env[local.env]}"
+#       "k8s.io/cluster-autoscaler/${var.eks_cluster_name}-${var.env[local.env]}" = "owned",
+#       "k8s.io/cluster-autoscaler/enabled"                                       = "true"
+#       "Terraform"                                                               = "true"
+#     },
+#     {
+#       Environment     = "${upper(each.key)}"
+#       Name            = "EKS-${var.k8s_version[local.env]}-${upper(local.node_selector_goapp)}-${upper(each.key)}"
+#       Type            = "PRODUCTS"
+#       ProductName     = "EKS-DEVOPSCORNER"
+#       ProductGroup    = "${upper(each.key)}-EKS-DEVOPSCORNER"
+#       Department      = "SOFTENG"
+#       DepartmentGroup = "${upper(each.key)}-SOFTENG"
+#       ResourceGroup   = "${upper(each.key)}-EKS-DEVOPSCORNER"
+#       Services        = "${upper(local.node_selector_goapp)}"
+#     }
+#   )
+# }
+
+# resource "aws_volume_attachment" "goapp_ebs" {
+#   for_each = (local.env == "prod" ? toset(["prod"]) : toset(["dev", "uat"]))
+
+#   device_name = "/dev/xvdf"
+#   volume_id   = aws_ebs_volume.goapp_ebs["${each.key}"].id
+#   instance_id = aws_eks_node_group.goapp["${each.key}"].id
+# }
+
+# ------------------------------------
 #  Target Group
 # ------------------------------------
 resource "aws_lb_target_group" "goapp" {

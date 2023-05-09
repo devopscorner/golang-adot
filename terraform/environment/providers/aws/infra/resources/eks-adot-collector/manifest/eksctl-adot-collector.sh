@@ -20,6 +20,7 @@ eksctl create iamserviceaccount \
     --attach-policy-arn arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess \
     --attach-policy-arn arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess \
     --attach-policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy \
+    --attach-policy-arn arn:aws:iam::aws:policy/AWSOpsWorksCloudWatchLogs \
     --approve \
     --override-existing-serviceaccounts
 

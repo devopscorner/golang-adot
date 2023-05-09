@@ -39,3 +39,8 @@ resource "aws_iam_role_policy_attachment" "adot_collector_cloudwatch" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   role       = aws_iam_role.adot_collector.name
 }
+
+resource "aws_iam_role_policy_attachment" "adot_collector_cloudwatch_logs" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSOpsWorksCloudWatchLogs"
+  role       = aws_iam_role.adot_collector.name
+}

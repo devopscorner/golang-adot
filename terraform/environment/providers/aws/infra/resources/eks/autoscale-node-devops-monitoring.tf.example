@@ -34,9 +34,9 @@ locals {
 ## Scale Down
 resource "aws_autoscaling_schedule" "scale_down_devops_monitoring" {
   autoscaling_group_name = aws_eks_node_group.devops["monitoring"].resources[0].autoscaling_groups[0].name
-  desired_capacity       = 0
-  max_size               = 0
-  min_size               = 0
+  desired_capacity       = 1
+  max_size               = 1
+  min_size               = 1
   recurrence             = "0 13,16 * * *"
   scheduled_action_name  = "scale_down"
   # start_time           = "2022-03-25T13:00:00Z"
@@ -45,7 +45,7 @@ resource "aws_autoscaling_schedule" "scale_down_devops_monitoring" {
 ## Scale Up
 resource "aws_autoscaling_schedule" "scale_up_devops_monitoring" {
   autoscaling_group_name = aws_eks_node_group.devops["monitoring"].resources[0].autoscaling_groups[0].name
-  desired_capacity       = 1
+  desired_capacity       = 3
   max_size               = 5
   min_size               = 1
   recurrence             = "0 0 * * MON-FRI"

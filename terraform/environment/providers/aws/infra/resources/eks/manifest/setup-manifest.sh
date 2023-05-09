@@ -4,7 +4,7 @@ export AWS_REGION="us-west-2"
 export ACCOUNT_ID="YOUR_AWS_ACCOUNT"
 export EKS_CLUSTER="devopscorner-prod"
 export EKS_VPC_ID="vpc-0987612345"
-export SSL_CERT_ARN="arn:aws:acm:us-west-2:${ACCOUNT_ID}:certificate/HASH_CERT_ID"
+export SSL_CERT_ARN="arn:aws:acm:us-west-2:${ACCOUNT_ID}:certificate/CERT_ID"
 
 # Use Template Replace String
 cat 01-auth-template.yaml | envsubst > 01-auth.yaml

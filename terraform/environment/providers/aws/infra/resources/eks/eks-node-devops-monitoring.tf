@@ -53,7 +53,7 @@ resource "aws_eks_node_group" "devops" {
   }
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 5
     min_size     = 1
   }
@@ -100,7 +100,6 @@ resource "aws_eks_node_group" "devops" {
 resource "aws_lb_target_group" "devops" {
   for_each = toset([
     "monitoring",
-    "tools"
   ])
 
   name     = "tg-${local.node_selector_devops}-${var.env[local.env]}-${each.key}"

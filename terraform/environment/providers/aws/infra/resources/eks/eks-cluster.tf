@@ -140,6 +140,10 @@ data "tls_certificate" "cluster" {
   url = aws_eks_cluster.aws_eks.identity.0.oidc.0.issuer
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 ### OIDC config
 resource "aws_iam_openid_connect_provider" "cluster" {
   client_id_list  = ["sts.amazonaws.com"]
