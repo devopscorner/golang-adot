@@ -2,6 +2,7 @@ package driver
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/devopscorner/golang-adot/src/config"
 	"github.com/devopscorner/golang-adot/src/model"
@@ -21,7 +22,7 @@ func ConnectMySQL() {
 	// https://gorm.io/docs/connecting_to_the_database.html
 
 	// Simple Connection
-	dsn := "user:pass@tcp(" + config.DbHost() + ":" + config.DbPort() + ")/" + config.DbDatabase() + "?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "user:pass@tcp(" + config.DbHost() + ":" + strconv.Itoa(config.DbPort()) + ")/" + config.DbDatabase() + "?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	// Advanced Connection

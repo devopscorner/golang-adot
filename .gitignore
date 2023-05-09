@@ -79,3 +79,5 @@ test/**
 *.db
 
 dynamodb-golang-adot*
+*.tar.gz
+*.tgz

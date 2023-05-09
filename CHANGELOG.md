@@ -2,7 +2,7 @@
 
 ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API Application (Bookstore)
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src) ![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-adot) ![tags](https://img.shields.io/github/v/tag/devopscorner/golang-adot?sort=semver) [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore-adot.svg)](https://hub.docker.com/r/devopscorner/bookstore-adot/) ![download all](https://img.shields.io/github/downloads/devopscorner/golang-adot/total.svg) ![download latest](https://img.shields.io/github/downloads/devopscorner/golang-adot/0.1/total) ![view](https://views.whatilearened.today/views/github/devopscorner/golang-adot.svg) ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-adot/blob/master/clone.json?raw=True&logo=github) ![issues](https://img.shields.io/github/issues/devopscorner/golang-adot) ![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-adot) ![forks](https://img.shields.io/github/forks/devopscorner/golang-adot) ![stars](https://img.shields.io/github/stars/devopscorner/golang-adot) [![license](https://img.shields.io/github/license/devopscorner/golang-adot)](https://img.shields.io/github/license/devopscorner/golang-adot)
+[![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src) [![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/graphs/contributors) [![tags](https://img.shields.io/github/v/tag/devopscorner/golang-adot?sort=semver)](https://github.com/devopscorner/golang-adot/releases) [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore-adot.svg)](https://hub.docker.com/r/devopscorner/bookstore-adot/) ![download all](https://img.shields.io/github/downloads/devopscorner/golang-adot/total.svg) ![view](https://views.whatilearened.today/views/github/devopscorner/golang-adot.svg) ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-adot/blob/master/clone.json?raw=True&logo=github) [![issues](https://img.shields.io/github/issues/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/issues) [![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/pulls) [![forks](https://img.shields.io/github/forks/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/fork) [![stars](https://img.shields.io/github/stars/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/stargazers) [![license](https://img.shields.io/github/license/devopscorner/golang-adot)](https://img.shields.io/github/license/devopscorner/golang-adot)
 
 ---
 
@@ -33,6 +33,20 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
 | `devopscorner/bookstore-adot:cicd-codebuild-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore-adot/cicd-codebuild-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore-adot/tags?page=1&ordering=last_updated&name=cicd-codebuild-latest) |
 | `devopscorner/bookstore-adot:cicd-codebuild-4.0` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore-adot/cicd-codebuild-4.0.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore-adot/tags?page=1&ordering=last_updated&name=cicd-codebuild-4.0) |
 | `devopscorner/bookstore-adot:cicd-latest` | [![docker image size](https://img.shields.io/docker/image-size/devopscorner/bookstore-adot/cicd-latest.svg?label=Image%20size&logo=docker)](https://hub.docker.com/repository/docker/devopscorner/bookstore-adot/tags?page=1&ordering=last_updated&name=cicd-latest) ![cicd-latest](https://img.shields.io/static/v1?label=latest&message=cicd-codebuild&color=orange) |
+
+---
+
+### version 1.1.4
+
+- Update docker-compose configuration for `golang-adot`
+- Update Postman Collection for testing `golang-adot`
+- Update helm template for stateful services
+- Update script for added pre-requirements EKS-Cluster & Monitoring
+- Added Grafana Dashboard in `script` folder
+- Refactoring Golang-Adot with additional features:
+  - Prometheus
+  - Tracing Otel (OpenTelemetry)
+  - Tracing XRay
 
 ---
 

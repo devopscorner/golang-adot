@@ -2,6 +2,7 @@ package driver
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/devopscorner/golang-adot/src/config"
 	"github.com/devopscorner/golang-adot/src/model"
@@ -20,7 +21,7 @@ func ConnectPSQL() {
 	// References:
 	// https://gorm.io/docs/connecting_to_the_database.html
 	DSN_HOST := "host=" + config.DbHost()
-	DSN_PORT := "port=" + config.DbPort()
+	DSN_PORT := "port=" + strconv.Itoa(config.DbPort())
 	DSN_USER := "user=" + config.DbUsername()
 	DSN_PASSWORD := "user=" + config.DbPassword()
 	DSN_DBNAME := "dbname=" + config.DbDatabase()

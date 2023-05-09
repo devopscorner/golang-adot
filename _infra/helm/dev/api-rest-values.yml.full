@@ -22,8 +22,8 @@ configMap:
       export GIN_MODE=release
 
 image:
-  # repository: YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore-adot
-  repository: devopscorner/bookstore-adot
+  repository: YOUR_AWS_ACCOUNT.dkr.ecr.us-west-2.amazonaws.com/devopscorner/bookstore-adot
+  # repository: devopscorner/bookstore-adot
   pullPolicy: Always
   tag: "alpine"
 
@@ -90,7 +90,7 @@ application:
     #  App URL & Port          #
     # ======================== #
     - name: APP_URL
-      value: "http://localhost"
+      value: "http://0.0.0.0"
     - name: APP_PORT
       value: "8080"
     # ======================== #
@@ -103,7 +103,7 @@ application:
     - name: DB_CONNECTION
       value: dynamo
     - name: DB_HOST
-      value: "http://localhost"
+      value: "http://0.0.0.0"
     - name: DB_PORT
       value: ""
     - name: DB_DATABASE
@@ -175,14 +175,14 @@ application:
     #  Prometheus              #
     # ======================== #
     - name: PROMETHEUS_ENDPOINT
-      value: http://localhost:8088
+      value: http://0.0.0.0:8088
     - name: PROMETHEUS_PORT
       value: "8088"
     # ======================== #
     #  Grafana                 #
     # ======================== #
     - name: GRAFANA_ENDPOINT
-      value: http://localhost:3000
+      value: http://0.0.0.0:3000
     - name: GRAFANA_API_KEY
       valueFrom:
         secretKeyRef:
@@ -203,7 +203,7 @@ application:
     - name: OTEL_SERVICE_NAME
       value: bookstore-adot
     - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://localhost:4317
+      value: http://0.0.0.0:4317
     - name: OTEL_EXPORTER_OTLP_PORT
       value: "4317"
     - name: OTEL_EXPORTER_OTLP_INSECURE
@@ -212,6 +212,16 @@ application:
       value: ""
     - name: OTEL_RESOURCE_ATTRIBUTES
       value: ""
+    - name: OTEL_TIME_INTERVAL
+      value: "1"
+    - name: OTEL_RANDOM_TIME_ALIVE_INCREMENTER
+      value: "1"
+    - name: OTEL_RANDOM_TOTAL_HEAP_SIZE_UPPER_BOUND
+      value: "100"
+    - name: OTEL_RANDOM_THREAD_ACTIVE_UPPOR_BOUND
+      value: "10"
+    - name: OTEL_RANDOM_CPU_USAGE_UPPER_BOUND
+      value: "100"
     # ======================== #
     #  Jaeger                  #
     # ======================== #
@@ -234,7 +244,7 @@ application:
     - name: JAEGER_REPORTER_LOCAL_AGENT_HOST_PORT
       value: "5001"
     - name: JAEGER_REPORTER_COLLECTOR_ENDPOINT
-      value: http://localhost:14268/api/traces
+      value: http://0.0.0.0:14268/api/traces
     - name: JAEGER_REPORTER_COLLECTOR_USER
       valueFrom:
         secretKeyRef:
@@ -255,9 +265,9 @@ application:
     #   - 1.x                  #
     # ======================== #
     - name: XRAY_VERSION
-      value: latest
+      value: "latest"
     - name: XRAY_DAEMON_ENDPOINT
-      value: http://localhost:2000
+      value: "https://xray.us-west-2.amazonaws.com"
     - name: XRAY_DAEMON_PORT
       value: "2000"
 

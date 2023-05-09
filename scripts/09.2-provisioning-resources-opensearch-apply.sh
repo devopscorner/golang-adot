@@ -1,4 +1,4 @@
-# Provisioning Managed Services Grafana (AMG)
+# Provisioning Managed OpenSearch
 
 #!/usr/bin/env sh
 

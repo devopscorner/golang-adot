@@ -2,18 +2,18 @@
 
 ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API Application (Bookstore)
 
-![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)
-![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-adot)
-![tags](https://img.shields.io/github/v/tag/devopscorner/golang-adot?sort=semver)
+[![goreport](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)](https://goreportcard.com/badge/github.com/devopscorner/golang-adot/src)
+[![all contributors](https://img.shields.io/github/contributors/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/graphs/contributors)
+[![tags](https://img.shields.io/github/v/tag/devopscorner/golang-adot?sort=semver)](https://github.com/devopscorner/golang-adot/releases)
 [![docker pulls](https://img.shields.io/docker/pulls/devopscorner/bookstore-adot.svg)](https://hub.docker.com/r/devopscorner/bookstore-adot/)
 ![download all](https://img.shields.io/github/downloads/devopscorner/golang-adot/total.svg)
-![download latest](https://img.shields.io/github/downloads/devopscorner/golang-adot/0.1/total)
+![download latest](https://img.shields.io/github/downloads/devopscorner/golang-adot/1.1.4/total)
 ![view](https://views.whatilearened.today/views/github/devopscorner/golang-adot.svg)
 ![clone](https://img.shields.io/badge/dynamic/json?color=success&label=clone&query=count&url=https://github.com/devopscorner/golang-adot/blob/master/clone.json?raw=True&logo=github)
-![issues](https://img.shields.io/github/issues/devopscorner/golang-adot)
-![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-adot)
-![forks](https://img.shields.io/github/forks/devopscorner/golang-adot)
-![stars](https://img.shields.io/github/stars/devopscorner/golang-adot)
+[![issues](https://img.shields.io/github/issues/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/issues)
+[![pull requests](https://img.shields.io/github/issues-pr/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/pulls)
+[![forks](https://img.shields.io/github/forks/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/fork)
+[![stars](https://img.shields.io/github/stars/devopscorner/golang-adot)](https://github.com/devopscorner/golang-adot/stargazers)
 [![license](https://img.shields.io/github/license/devopscorner/golang-adot)](https://img.shields.io/github/license/devopscorner/golang-adot)
 
 ---
@@ -63,56 +63,58 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
 ## GO Repository Pattern
 
 - Folder Structure
-  ```
-      .
-      ├── .env
-      ├── .env.example
-      ├── config
-      │   ├── config.go
-      │   ├── config_test.go
-      │   ├── const.go
-      │   ├── logger.go
-      │   └── value.go
-      ├── controller
-      │   ├── book_controller.go
-      │   ├── book_controller_test.go
-      │   ├── login_controller.go
-      │   └── login_controller_test.go
-      ├── driver
-      │   ├── db.go
-      │   ├── dynamo.go
-      │   ├── mysql.go
-      │   ├── psql.go
-      │   └── sqlite.go
-      ├── dynamodb-golang-adot
-      ├── go.mod
-      ├── go.sum
-      ├── main.go
-      ├── main_test.go
-      ├── middleware
-      │   ├── auth_middleware.go
-      │   └── auth_middleware_test.go
-      ├── migrate_book.go.example
-      ├── migrate_book_dynamo.go.example
-      ├── model
-      │   └── book.go
-      ├── observability
-      │   ├── metrics.go
-      │   ├── provider.go
-      │   └── xray.go
-      ├── repository
-      │   └── book_repository.go
-      ├── routes
-      │   ├── book_routes.go
-      │   ├── main_routes.go
-      │   └── telemetry_routes.go
-      └── view
-          ├── book_view.go
-          ├── error_view.go
-          └── login_view.go
 
-      10 directories, 36 files
-  ```
+```
+.
+├── .env
+├── .env.example
+├── config
+│   ├── config.go
+│   ├── config_test.go
+│   ├── const.go
+│   ├── logger.go
+│   └── value.go
+├── controller
+│   ├── book_controller.go
+│   ├── book_controller_test.go
+│   ├── login_controller.go
+│   └── login_controller_test.go
+├── driver
+│   ├── db.go
+│   ├── dynamodb.go
+│   ├── mysql.go
+│   ├── psql.go
+│   └── sqlite.go
+├── go.mod
+├── go.sum
+├── main.go
+├── main_test.go
+├── middleware
+│   ├── auth_middleware.go
+│   └── auth_middleware_test.go
+├── migrate_book.go.example
+├── migrate_book_dynamo.go.example
+├── model
+│   └── book.go
+├── observability
+│   ├── metrics.go
+│   ├── provider.go
+│   ├── tracing-otel.go
+│   └── tracing-xray.go
+├── repository
+│   └── book_repository.go
+├── routes
+│   ├── book_routes.go
+│   ├── main_routes.go
+│   ├── telemetry_routes.go
+│   └── tracing_routes.go
+└── view
+    ├── book_view.go
+    ├── error_view.go
+    └── login_view.go
+
+10 directories, 37 files
+```
 
 ## Coverages:
 ### AWS Services
@@ -125,7 +127,7 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
 - AWS Systems Manager Parameter Store
 - AWS Developer Tools (AWS CodeCommit, AWS CodePipeline, AWS CodeBuild)
 - Amazon EKS
-- Amazon OpenSearch
+- Amazon OpenSearch -- *(Optional)*
 - Amazon DynamoDB
 
 ### Others:
@@ -253,6 +255,16 @@ ADOT (AWS Distro for OpenTelemetry) Implementation for Simple Golang RESTful API
   8. Provisioning Resources Managed Services Grafana (AMG), detail [here](docs/reproduce-08-provisioning-resources-amg.md)
   9. Provisioning Resources Managed Services OpenSearch, detail [here](docs/reproduce-09-provisioning-resources-opensearch.md)
   10. Provisioning Resources EKS ADOT Collector, detail [here](docs/reproduce-10-provisioning-resources-eks-adot-collector.md)
+
+## Snapshots
+
+- Grafana Dashboard
+  ![golang-adot-001](./docs/assets/adot-001.png)
+  ![golang-adot-002](./docs/assets/adot-002.png)
+
+- XRay
+  ![golang-adot-003](./docs/assets/adot-003.png)
+  ![golang-adot-004](./docs/assets/adot-004.png)
 
 ## Tested Environment
 

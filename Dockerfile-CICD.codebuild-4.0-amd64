@@ -10,7 +10,8 @@ RUN apk add --no-cache \
         git \
         curl \
         make \
-        bash
+        bash \
+        ca-certificates
 
 COPY src /go/src/app
 
@@ -77,6 +78,11 @@ ENV OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT:-http://localhost:
 ENV OTEL_EXPORTER_OTLP_INSECURE=${OTEL_EXPORTER_OTLP_INSECURE:-true}
 ENV OTEL_EXPORTER_OTLP_HEADERS=${OTEL_EXPORTER_OTLP_HEADERS}
 ENV OTEL_RESOURCE_ATTRIBUTES=${OTEL_RESOURCE_ATTRIBUTES}
+ENV OTEL_TIME_INTERVAL=${OTEL_TIME_INTERVAL:-1}
+ENV OTEL_RANDOM_TIME_ALIVE_INCREMENTER=${OTEL_RANDOM_TIME_ALIVE_INCREMENTER:-1}
+ENV OTEL_RANDOM_TOTAL_HEAP_SIZE_UPPER_BOUND=${OTEL_RANDOM_TOTAL_HEAP_SIZE_UPPER_BOUND:-100}
+ENV OTEL_RANDOM_THREAD_ACTIVE_UPPOR_BOUND=${OTEL_RANDOM_THREAD_ACTIVE_UPPOR_BOUND:-10}
+ENV OTEL_RANDOM_CPU_USAGE_UPPER_BOUND=${OTEL_RANDOM_CPU_USAGE_UPPER_BOUND:-100}
 
 # Jaeger
 ENV JAEGER_AGENT_PORT=${JAEGER_AGENT_PORT:-6831}
@@ -94,6 +100,8 @@ ENV JAEGER_TAGS=${JAEGER_TAGS:-golang,otel,restful,api,bookstore}
 
 # X-Ray
 ENV XRAY_VERSION=${XRAY_VERSION:-latest}
+ENV XRAY_DAEMON_ENDPOINT=${XRAY_DAEMON_ENDPOINT:-https://xray.us-west-2.amazonaws.com}
+ENV XRAY_DAEMON_PORT=${XRAY_DAEMON_PORT:-2000}
 
 LABEL maintainer="$AUTHOR" \
         architecture="$IMG_ARCH" \
@@ -127,10 +135,13 @@ RUN gvm use go${GOLANG_VERSION} --default; sync
 WORKDIR /go
 
 COPY --from=builder /go/src/app/goapp /go/goapp
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=devopscorner/k8s-context:latest /usr/local/bin/k8s-context /usr/local/bin/k8s-context
 COPY --from=devopscorner/k8s-context:latest /usr/local/bin/kc /usr/local/bin/kc
 
 COPY src /go/src
+COPY _infra /go/src
+COPY .aws /go/src
 COPY src/.env.example /go/.env
 COPY entrypoint.sh /go/entrypoint
 

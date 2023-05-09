@@ -11,7 +11,7 @@ kubectl config use-context arn:aws:eks:us-west-2:${ACCOUNT_ID}:cluster/${EKS_CLU
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
-kubectl create namespace certmanager
+kubectl create namespace cert-manager
 
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
 
