@@ -18,18 +18,13 @@ set_tag() {
   export BASE_IMAGE=$3
   export TAGS_ID=$4
   export CUSTOM_TAGS=$5
-  export COMMIT_HASH=$(git log -1 --format=format:"%H")
 
   if [ "$CUSTOM_TAGS" = "" ]; then
     export TAGS="$TAGS_ID \
-    $BASE_IMAGE-$TAGS_ID \
-    $TAGS_ID-$COMMIT_HASH \
-    $BASE_IMAGE-$COMMIT_HASH "
+    $BASE_IMAGE-$TAGS_ID"
   else
     export TAGS="$TAGS_ID \
     $BASE_IMAGE-$TAGS_ID \
-    $TAGS_ID-$COMMIT_HASH \
-    $BASE_IMAGE-$COMMIT_HASH \
     $TAGS_ID-$CUSTOM_TAGS"
   fi
 }
