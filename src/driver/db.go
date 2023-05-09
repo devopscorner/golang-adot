@@ -1,14 +1,14 @@
 package driver
 
 import (
+	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/devopscorner/golang-adot/src/config"
-	"github.com/guregu/dynamo"
 	"gorm.io/gorm"
 )
 
 var (
 	DB  *gorm.DB
-	DYN *dynamo.DB
+	DYN *dynamodb.DynamoDB
 )
 
 func ConnectDatabase() {

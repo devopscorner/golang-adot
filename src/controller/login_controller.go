@@ -21,9 +21,6 @@ var loginRequest LoginRequest
 func LoginUser(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
 	if err := ctx.BindJSON(&loginRequest); err != nil {
 		view.ErrorBadRequest(ctx, err)
 		return

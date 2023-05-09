@@ -29,10 +29,7 @@ type UpdateBookInput struct {
 func GetAllBooks(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
-	books := repository.GetAll()
+	books := repository.GetAll(ctx)
 
 	// Prometheus Duration
 	observability.SetDuration(ctx, start)
@@ -45,16 +42,13 @@ func GetAllBooks(ctx *gin.Context) {
 func GetBookByID(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		view.ErrorInvalidId(ctx)
 		return
 	}
 
-	book, err := repository.GetByID(strconv.Itoa(id))
+	book, err := repository.GetByID(ctx, strconv.Itoa(id))
 	if err != nil {
 		view.ErrorInternalServer(ctx, err)
 		return
@@ -75,9 +69,6 @@ func GetBookByID(ctx *gin.Context) {
 func CreateBook(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
 	// Validate input
 	var input CreateBookInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -93,7 +84,7 @@ func CreateBook(ctx *gin.Context) {
 		return
 	}
 
-	err := repository.Create(&book)
+	err := repository.Create(ctx, &book)
 	if err != nil {
 		view.ErrorInternalServer(ctx, err)
 		return
@@ -110,16 +101,13 @@ func CreateBook(ctx *gin.Context) {
 func UpdateBook(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		view.ErrorInvalidId(ctx)
 		return
 	}
 
-	book, err := repository.GetByID(strconv.Itoa(id))
+	book, err := repository.GetByID(ctx, strconv.Itoa(id))
 	if err != nil {
 		view.ErrorNotFound(ctx)
 		return
@@ -130,7 +118,7 @@ func UpdateBook(ctx *gin.Context) {
 		return
 	}
 
-	if err := repository.Update(book); err != nil {
+	if err := repository.Update(ctx, book); err != nil {
 		view.ErrorUpdate(ctx)
 		return
 	}
@@ -146,16 +134,13 @@ func UpdateBook(ctx *gin.Context) {
 func DeleteBook(ctx *gin.Context) {
 	start := time.Now()
 
-	// Prometheus Metrics
-	observability.SetMetrics(ctx)
-
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		view.ErrorInvalidId(ctx)
 		return
 	}
 
-	if err := repository.Delete(strconv.Itoa(id)); err != nil {
+	if err := repository.Delete(ctx, strconv.Itoa(id)); err != nil {
 		view.ErrorDelete(ctx)
 		return
 	}

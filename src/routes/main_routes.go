@@ -7,6 +7,7 @@ import (
 	"github.com/devopscorner/golang-adot/src/config"
 	"github.com/devopscorner/golang-adot/src/driver"
 	"github.com/gin-gonic/gin"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
 func SetupRoutes(router *gin.Engine) {
@@ -30,6 +31,7 @@ func SetupRoutes(router *gin.Engine) {
 	})
 
 	// Telemetry Routes
+	router.Use(otelgin.Middleware(config.OtelServiceName()))
 	TelemetryRoutes(router)
 
 	// Book Routes

@@ -10,7 +10,7 @@ import (
 
 func TestLoadConfig(t *testing.T) {
 	os.Setenv("APP_URL", "http://localhost")
-	os.Setenv("APP_PORT", "8080")
+	os.Setenv("APP_PORT", 8080)
 	os.Setenv("DB_CONNECTION", "sqlite")
 	os.Setenv("DB_HOST", "localhost")
 	os.Setenv("DB_PORT", "")
@@ -28,7 +28,7 @@ func TestLoadConfig(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, "http://localhost", cfg.AppUrl)
-	assert.Equal(t, "8080", cfg.AppPort)
+	assert.Equal(t, 8080, cfg.AppPort)
 	assert.Equal(t, "us-west-2", cfg.DbRegion)
 	assert.Equal(t, "sqlite", cfg.DbConnection)
 	assert.Equal(t, "", cfg.DbPort)

@@ -6,12 +6,13 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/aws/aws-xray-sdk-go/xray"
 	"github.com/devopscorner/golang-adot/src/config"
-	"github.com/guregu/dynamo"
 )
 
 var (
-	DB_Dynamo *dynamo.DB
+	DB_Dynamo *dynamodb.DynamoDB
 )
 
 func ConnectDynamo() {
@@ -25,7 +26,7 @@ func ConnectDynamo() {
 		DisableSSL: aws.Bool(true),
 	}))
 
-	database := dynamo.New(sess, &aws.Config{
+	database := dynamodb.New(sess, &aws.Config{
 		Region: aws.String(config.AWSRegion()),
 		Credentials: credentials.NewStaticCredentials(
 			config.AWSAccessKey(),
@@ -34,7 +35,7 @@ func ConnectDynamo() {
 		),
 	})
 
-	database.Table(config.DbDatabase())
+	xray.AWS(database.Client)
 
 	DB_Dynamo = database
 }

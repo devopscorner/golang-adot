@@ -14,9 +14,9 @@ func AppUrl() string {
 	return config.AppUrl
 }
 
-func AppPort() string {
+func AppPort() int {
 	config := &Config{
-		AppPort: viper.GetString("APP_PORT"),
+		AppPort: viper.GetInt("APP_PORT"),
 	}
 	return config.AppPort
 }
@@ -38,9 +38,9 @@ func DbHost() string {
 	return config.DbHost
 }
 
-func DbPort() string {
+func DbPort() int {
 	config := &Config{
-		DbPort: viper.GetString("DB_PORT"),
+		DbPort: viper.GetInt("DB_PORT"),
 	}
 	return config.DbPort
 }
@@ -165,9 +165,9 @@ func PrometheusEndpoint() string {
 	return config.PrometheusEndpoint
 }
 
-func PrometheusPort() string {
+func PrometheusPort() int {
 	config := &Config{
-		PrometheusPort: viper.GetString("PROMETHEUS_PORT"),
+		PrometheusPort: viper.GetInt("PROMETHEUS_PORT"),
 	}
 	return config.PrometheusPort
 }
@@ -234,9 +234,9 @@ func OtelOtlpEndpoint() string {
 	return config.OtelOtlpEndpoint
 }
 
-func OtelOtlpPort() string {
+func OtelOtlpPort() int {
 	config := &Config{
-		OtelOtlpPort: viper.GetString("OTEL_EXPORTER_OTLP_PORT"),
+		OtelOtlpPort: viper.GetInt("OTEL_EXPORTER_OTLP_PORT"),
 	}
 	return config.OtelOtlpPort
 }
@@ -262,12 +262,47 @@ func OtelAttributes() string {
 	return config.OtelAttributes
 }
 
+func OtelTimeInterval() int64 {
+	config := &Config{
+		OtelTimeInterval: viper.GetInt64("OTEL_TIME_INTERVAL"),
+	}
+	return config.OtelTimeInterval
+}
+
+func OtelTimeAliveIncrementer() int64 {
+	config := &Config{
+		OtelTimeAliveIncrementer: viper.GetInt64("OTEL_RANDOM_TIME_ALIVE_INCREMENTER"),
+	}
+	return config.OtelTimeAliveIncrementer
+}
+
+func OtelTotalHeapSizeUpperBound() int64 {
+	config := &Config{
+		OtelTotalHeapSizeUpperBound: viper.GetInt64("OTEL_RANDOM_TOTAL_HEAP_SIZE_UPPER_BOUND"),
+	}
+	return config.OtelTotalHeapSizeUpperBound
+}
+
+func OtelThreadsActiveUpperBound() int64 {
+	config := &Config{
+		OtelThreadsActiveUpperBound: viper.GetInt64("OTEL_RANDOM_THREAD_ACTIVE_UPPOR_BOUND"),
+	}
+	return config.OtelThreadsActiveUpperBound
+}
+
+func OtelCpuUsageUpperBound() int64 {
+	config := &Config{
+		OtelCpuUsageUpperBound: viper.GetInt64("OTEL_RANDOM_CPU_USAGE_UPPER_BOUND"),
+	}
+	return config.OtelCpuUsageUpperBound
+}
+
 // -----------------------------------
 // JAEGER
 // -----------------------------------
-func JaegerAgentPort() string {
+func JaegerAgentPort() int {
 	config := &Config{
-		JaegerAgentPort: viper.GetString("JAEGER_AGENT_PORT"),
+		JaegerAgentPort: viper.GetInt("JAEGER_AGENT_PORT"),
 	}
 	return config.JaegerAgentPort
 }
@@ -279,9 +314,9 @@ func JaegerSamplerType() string {
 	return config.JaegerSamplerType
 }
 
-func JaegerSamplerParam() string {
+func JaegerSamplerParam() int {
 	config := &Config{
-		JaegerSamplerParam: viper.GetString("JAEGER_SAMPLER_PARAM"),
+		JaegerSamplerParam: viper.GetInt("JAEGER_SAMPLER_PARAM"),
 	}
 	return config.JaegerSamplerParam
 }
@@ -300,16 +335,16 @@ func JaegerReporterLogSpan() string {
 	return config.JaegerReporterLogSpan
 }
 
-func JaegerReporterBufferFlushInterval() string {
+func JaegerReporterBufferFlushInterval() int {
 	config := &Config{
-		JaegerReporterBufferFlushInterval: viper.GetString("JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL"),
+		JaegerReporterBufferFlushInterval: viper.GetInt("JAEGER_REPORTER_BUFFER_FLUSH_INTERVAL"),
 	}
 	return config.JaegerReporterBufferFlushInterval
 }
 
-func JaegerReporterMaxQueueSize() string {
+func JaegerReporterMaxQueueSize() int {
 	config := &Config{
-		JaegerReporterMaxQueueSize: viper.GetString("JAEGER_REPORTER_MAX_QUEUE_SIZE"),
+		JaegerReporterMaxQueueSize: viper.GetInt("JAEGER_REPORTER_MAX_QUEUE_SIZE"),
 	}
 	return config.JaegerReporterMaxQueueSize
 }
@@ -366,9 +401,9 @@ func XRayDaemonEndpoint() string {
 	return config.XRayDaemonEndpoint
 }
 
-func XRayDaemonPort() string {
+func XRayDaemonPort() int {
 	config := &Config{
-		XRayDaemonPort: viper.GetString("XRAY_DAEMON_PORT"),
+		XRayDaemonPort: viper.GetInt("XRAY_DAEMON_PORT"),
 	}
 	return config.XRayDaemonPort
 }
