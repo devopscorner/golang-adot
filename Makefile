@@ -133,6 +133,7 @@ codebuild-modules:
 	@echo " Task      : Get CodeBuild Modules "
 	@echo " Date/Time : `date` "
 	@echo "============================================================"
+	@echo "./get-modules-codebuild.sh"
 	@./get-modules-codebuild.sh
 
 # ==================== #
@@ -144,6 +145,7 @@ git-clone:
 	@echo " Task      : Clone Repository Sources "
 	@echo " Date/Time : `date`"
 	@echo "================================================="
+	@echo "./git-clone.sh $(SOURCE) $(TARGET)"
 	@sh ./git-clone.sh $(SOURCE) $(TARGET)
 	@echo '- DONE -'
 
@@ -157,6 +159,7 @@ dockerhub-build-alpine:
 	@echo " Task      : Create Container GO-APP Alpine Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./dockerhub-build.sh Dockerfile $(CI_PATH) alpine ${ALPINE_VERSION}"
 	@sh ./dockerhub-build.sh Dockerfile $(CI_PATH) alpine ${ALPINE_VERSION}
 
 # ./ecr-build.sh [AWS_ACCOUNT] Dockerfile [ECR_PATH] [alpine] [version|latest|tags] [custom-tags]
@@ -165,6 +168,7 @@ ecr-build-alpine:
 	@echo " Task      : Create Container GO-APP Alpine Image "
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./ecr-build.sh $(ARGS) Dockerfile $(CI_PATH) alpine ${ALPINE_VERSION}"
 	@sh ./ecr-build.sh $(ARGS) Dockerfile $(CI_PATH) alpine ${ALPINE_VERSION}
 
 # ========================= #
@@ -177,6 +181,7 @@ dockerhub-tag-alpine:
 	@echo " Task      : Set Tags Image Alpine to DockerHub"
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./dockerhub-tag.sh $(CI_PATH) alpine ${ALPINE_VERSION}"
 	@sh ./dockerhub-tag.sh $(CI_PATH) alpine ${ALPINE_VERSION}
 
 # ./ecr-tag.sh [AWS_ACCOUNT] [ECR_PATH] [alpine|codebuild] [version|latest|tags] [custom-tags]
@@ -185,6 +190,7 @@ ecr-tag-alpine:
 	@echo " Task      : Set Tags Image Alpine to ECR"
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./ecr-tag.sh $(ARGS) $(CI_PATH) alpine ${ALPINE_VERSION}"
 	@sh ./ecr-tag.sh $(ARGS) $(CI_PATH) alpine ${ALPINE_VERSION}
 
 # ========================= #
@@ -197,6 +203,7 @@ dockerhub-push-alpine:
 	@echo " Task      : Push Image Alpine to DockerHub"
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./dockerhub-push.sh $(CI_PATH) alpine"
 	@sh ./dockerhub-push.sh $(CI_PATH) alpine
 
 ecr-push-alpine:
@@ -204,4 +211,5 @@ ecr-push-alpine:
 	@echo " Task      : Push Image Alpine to ECR"
 	@echo " Date/Time : `date`"
 	@echo "========================================================"
+	@echo "./ecr-push.sh $(ARGS) $(CI_PATH) alpine"
 	@sh ./ecr-push.sh $(ARGS) $(CI_PATH) alpine
